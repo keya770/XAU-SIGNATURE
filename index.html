@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>XAU Technologies LLC — Email Signature Generator</title>
+  <link rel="icon" href="assets/logo-sm.png?v=clear2" type="image/png" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="styles.css?v=dark1" />
+</head>
+<body>
+  <header class="topbar">
+    <div class="brand">
+      <img src="assets/logo-sm.png?v=clear2" alt="XAU Technologies LLC" />
+      <div>
+        <h1>XAU Technologies LLC</h1>
+        <p>Professional email signature generator</p>
+      </div>
+    </div>
+    <a class="site-chip" href="https://xedge.trade" target="_blank" rel="noopener">xedge.trade</a>
+  </header>
+
+  <main class="layout">
+    <section class="panel form-panel">
+      <h2>Your details</h2>
+      <form id="sig-form" autocomplete="on" onsubmit="return false">
+        <div class="section-label">Profile</div>
+        <label>
+          Full name
+          <input id="name" type="text" placeholder="e.g. Ahmed Khan" required />
+        </label>
+        <div class="grid-2">
+          <label>
+            Job title
+            <input id="title" type="text" placeholder="e.g. Managing Director" />
+          </label>
+          <label>
+            Department <span class="opt">optional</span>
+            <input id="department" type="text" placeholder="e.g. Markets" />
+          </label>
+        </div>
+
+        <div class="section-label">Contact</div>
+        <div class="grid-2">
+          <label>
+            Phone
+            <input id="phone" type="tel" placeholder="+230 000 0000" />
+          </label>
+          <label>
+            Mobile <span class="opt">optional</span>
+            <input id="mobile" type="tel" placeholder="+230 000 0001" />
+          </label>
+        </div>
+        <label>
+          Email
+          <input id="email" type="email" placeholder="name@xedge.trade" />
+        </label>
+        <label>
+          Website
+          <input id="website" type="text" value="xedge.trade" />
+        </label>
+        <label>
+          Address <span class="opt">optional</span>
+          <input id="address" type="text" placeholder="Mauritius" />
+        </label>
+
+        <div class="section-label">Company socials</div>
+        <div class="social-locks">
+          <a class="social-lock" href="https://x.com/xaumarkets" target="_blank" rel="noopener">
+            <img src="assets/icons/x.png?v=clear2" alt="" />
+            <span>X / @xaumarkets</span>
+          </a>
+          <a class="social-lock" href="https://www.instagram.com/xauicapitalmarkets" target="_blank" rel="noopener">
+            <img src="assets/icons/instagram.png?v=clear2" alt="" />
+            <span>Instagram</span>
+          </a>
+          <a class="social-lock" href="https://www.linkedin.com/in/xau-markets-9573a4410/" target="_blank" rel="noopener">
+            <img src="assets/icons/linkedin.png?v=clear2" alt="" />
+            <span>LinkedIn</span>
+          </a>
+        </div>
+        <p class="company-lock">Company: <strong>XAU Technologies LLC</strong></p>
+      </form>
+    </section>
+
+    <section class="panel preview-panel">
+      <h2>Signature preview</h2>
+
+      <div class="theme-switch" role="group" aria-label="Signature theme">
+        <button type="button" class="theme-btn" data-theme="light">Light</button>
+        <button type="button" class="theme-btn active" data-theme="dark">Dark</button>
+      </div>
+
+      <div class="styles" role="tablist" aria-label="Signature styles">
+        <button type="button" class="style-btn active" data-style="classic">
+          <span class="style-num">01</span>
+          Classic
+          <small>Logo + divider</small>
+        </button>
+        <button type="button" class="style-btn" data-style="modern">
+          <span class="style-num">02</span>
+          Modern
+          <small>Banner line</small>
+        </button>
+        <button type="button" class="style-btn" data-style="minimal">
+          <span class="style-num">03</span>
+          Minimal
+          <small>Compact card</small>
+        </button>
+      </div>
+
+      <div class="email-mock is-dark">
+        <div class="email-mock-top">
+          <span class="win-dot"></span>
+          <span class="win-dot"></span>
+          <span class="win-dot"></span>
+          <span>New message</span>
+        </div>
+        <div class="email-mock-meta">
+          <div><span>To</span> client@company.com</div>
+          <div><span>Subject</span> Following up</div>
+        </div>
+        <div class="email-mock-body">
+          <p>Hello,</p>
+          <p>Thank you for your time today. Please find the details below.</p>
+          <p>Best regards,</p>
+          <div id="sig-output" class="sig-output"></div>
+        </div>
+      </div>
+
+      <div class="actions">
+        <button type="button" id="copy-btn" class="btn-primary">Copy signature</button>
+        <button type="button" id="copy-html-btn" class="btn-ghost">Copy HTML</button>
+      </div>
+      <p id="copy-status" class="copy-status" role="status"></p>
+
+      <ol class="howto">
+        <li><strong>Gmail:</strong> Settings → See all settings → General → Signature → paste.</li>
+        <li><strong>Outlook:</strong> File → Options → Mail → Signatures → paste.</li>
+        <li><strong>Apple Mail:</strong> Mail → Settings → Signatures → paste.</li>
+      </ol>
+    </section>
+  </main>
+
+  <footer>
+    <span>XAU Technologies LLC</span>
+    <span>xedge.trade · Gmail, Outlook &amp; Apple Mail</span>
+  </footer>
+
+  <script src="app.js?v=underline3"></script>
+</body>
+</html>
