@@ -1,5 +1,16 @@
 (() => {
-  const COMPANY = "XAU Technologies LLC";
+  const COMPANIES = {
+    xau: {
+      name: "XAU Technologies LLC",
+      website: "xau.trade",
+      href: "https://xau.trade",
+    },
+    xedge: {
+      name: "XEDGE",
+      website: "xedge.trade",
+      href: "https://xedge.trade",
+    },
+  };
   const FONT = "Arial, Helvetica, sans-serif";
 
   const THEMES = {
@@ -40,6 +51,12 @@
   };
 
   const formIds = ["name", "title", "department", "phone", "mobile", "email", "website", "address"];
+  const companySelect = document.getElementById("company");
+  const siteChip = document.getElementById("site-chip");
+  const brandTitle = document.querySelector(".brand h1");
+  const footerCompany = document.querySelector("footer span");
+  const emailInput = document.getElementById("email");
+  const websiteInput = document.getElementById("website");
   const output = document.getElementById("sig-output");
   const copyBtn = document.getElementById("copy-btn");
   const copyHtmlBtn = document.getElementById("copy-html-btn");
@@ -70,16 +87,22 @@
 
   const webLabel = (url) => url.replace(/^https?:\/\//i, "").replace(/\/$/, "");
 
-  const data = () => ({
-    name: field("name") || "Your Name",
-    title: field("title"),
-    department: field("department"),
-    phone: field("phone"),
-    mobile: field("mobile"),
-    email: field("email"),
-    website: field("website") || "xedge.trade",
-    address: field("address"),
-  });
+  const selectedCompany = () => COMPANIES[companySelect.value] || COMPANIES.xau;
+
+  const data = () => {
+    const company = selectedCompany();
+    return {
+      name: field("name") || "Your Name",
+      title: field("title"),
+      department: field("department"),
+      phone: field("phone"),
+      mobile: field("mobile"),
+      email: field("email"),
+      website: field("website") || company.website,
+      address: field("address"),
+      company: company.name,
+    };
+  };
 
   const a = (href, text, color) =>
     `<a href="${esc(href)}" style="color:${color};text-decoration:none;" target="_blank">${esc(text)}</a>`;
@@ -87,8 +110,8 @@
   const img = (key, width, alt, extra = "") =>
     `<img src="${esc(src[key])}" width="${width}" height="${width}" alt="${esc(alt)}" style="display:block;border:0;outline:none;text-decoration:none;background:transparent;${extra}" />`;
 
-  const logoImg = (width) =>
-    `<img src="${esc(src.logo)}" width="${width}" alt="${esc(COMPANY)}" style="display:block;border:0;outline:none;text-decoration:none;height:auto;max-width:${width}px;background:transparent;" />`;
+  const logoImg = (width, companyName) =>
+    `<img src="${esc(src.logo)}" width="${width}" alt="${esc(companyName)}" style="display:block;border:0;outline:none;text-decoration:none;height:auto;max-width:${width}px;background:transparent;" />`;
 
   function nameUnderline(width = 86) {
     const key = currentTheme === "dark" ? "underlineDark" : "underline";
@@ -96,8 +119,8 @@
     return `<img src="${esc(src[key])}" width="${width}" height="${height}" alt="" style="display:block;border:0;outline:none;text-decoration:none;width:${width}px;height:${height}px;background:transparent;" />`;
   }
 
-  function logoBlock(width) {
-    return logoImg(width);
+  function logoBlock(width, companyName) {
+    return logoImg(width, companyName);
   }
 
   const roleLine = (d) => [d.title, d.department].filter(Boolean).join(" · ");
@@ -155,12 +178,12 @@
     return wrap(`
       <table cellpadding="0" cellspacing="0" border="0" style="border-collapse:collapse;font-family:${FONT};">
         <tr>
-          <td style="vertical-align:middle;padding:0 18px 0 0;">${logoBlock(84)}</td>
+          <td style="vertical-align:middle;padding:0 18px 0 0;">${logoBlock(84, d.company)}</td>
           <td style="border-left:2px solid ${c.red};padding:2px 0 2px 18px;vertical-align:middle;">
             <div style="font-size:18px;line-height:22px;font-weight:bold;color:${c.ink};font-family:${FONT};">${esc(d.name)}</div>
             <div style="padding:6px 0 4px;line-height:0;font-size:0;">${nameUnderline(86)}</div>
             ${role ? `<div style="font-size:13px;line-height:18px;color:${c.red};padding-top:2px;font-family:${FONT};">${esc(role)}</div>` : ""}
-            <div style="font-size:12px;line-height:18px;color:${c.muted};padding:2px 0 10px;font-family:${FONT};">${esc(COMPANY)}</div>
+            <div style="font-size:12px;line-height:18px;color:${c.muted};padding:2px 0 10px;font-family:${FONT};">${esc(d.company)}</div>
             ${contactsBlock(d)}
             <div style="padding-top:8px;">${socialRow(22)}</div>
           </td>
@@ -175,12 +198,12 @@
     return wrap(`
       <table cellpadding="0" cellspacing="0" border="0" style="border-collapse:collapse;font-family:${FONT};">
         <tr>
-          <td style="vertical-align:middle;padding:0 16px 0 0;">${logoBlock(76)}</td>
+          <td style="vertical-align:middle;padding:0 16px 0 0;">${logoBlock(76, d.company)}</td>
           <td style="vertical-align:middle;">
             <div style="font-size:20px;line-height:24px;font-weight:bold;color:${c.ink};font-family:${FONT};">${esc(d.name)}</div>
             <div style="padding:7px 0 4px;line-height:0;font-size:0;">${nameUnderline(92)}</div>
             ${role ? `<div style="font-size:13px;line-height:18px;color:${c.red};padding-top:2px;font-family:${FONT};">${esc(role)}</div>` : ""}
-            <div style="font-size:12px;line-height:18px;color:${c.muted};padding-top:2px;font-family:${FONT};">${esc(COMPANY)}</div>
+            <div style="font-size:12px;line-height:18px;color:${c.muted};padding-top:2px;font-family:${FONT};">${esc(d.company)}</div>
           </td>
         </tr>
         <tr>
@@ -215,12 +238,12 @@
               ${esc(d.name)}${role ? ` <span style="color:${c.muted};font-weight:normal;">|</span> <span style="font-weight:normal;color:${c.muted};font-size:13px;">${esc(role)}</span>` : ""}
             </div>
             <div style="padding:8px 0 8px;line-height:0;font-size:0;">${nameUnderline(82)}</div>
-            <div style="font-size:12px;line-height:18px;color:${c.muted};font-family:${FONT};">${esc(COMPANY)}</div>
+            <div style="font-size:12px;line-height:18px;color:${c.muted};font-family:${FONT};">${esc(d.company)}</div>
             <div style="font-size:12px;line-height:18px;padding:4px 0 10px;font-family:${FONT};">${a(webHref(d.website), webLabel(d.website), c.red)}</div>
             ${d.phone || d.mobile || d.email || d.address ? contactsBlock({ ...d, website: "" }) : ""}
             <div style="padding-top:8px;">${socialRow(22)}</div>
           </td>
-          <td style="vertical-align:middle;">${logoBlock(62)}</td>
+          <td style="vertical-align:middle;">${logoBlock(62, d.company)}</td>
         </tr>
       </table>
     `);
@@ -323,9 +346,22 @@
     render();
   }
 
+  function applyCompany(syncWebsite = true) {
+    const company = selectedCompany();
+    if (syncWebsite) websiteInput.value = company.website;
+    emailInput.placeholder = `name@${company.website}`;
+    siteChip.href = company.href;
+    siteChip.textContent = company.website;
+    brandTitle.textContent = company.name;
+    footerCompany.textContent = company.name;
+    render();
+  }
+
   formIds.forEach((id) => {
     document.getElementById(id).addEventListener("input", render);
   });
+
+  companySelect.addEventListener("change", () => applyCompany(true));
 
   styleButtons.forEach((btn) => {
     btn.addEventListener("click", () => {

@@ -8,7 +8,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="styles.css?v=dark1" />
+  <link rel="stylesheet" href="styles.css?v=company1" />
 </head>
 <body>
   <header class="topbar">
@@ -19,7 +19,7 @@
         <p>Professional email signature generator</p>
       </div>
     </div>
-    <a class="site-chip" href="https://xedge.trade" target="_blank" rel="noopener">xedge.trade</a>
+    <a class="site-chip" id="site-chip" href="https://xau.trade" target="_blank" rel="noopener">xau.trade</a>
   </header>
 
   <main class="layout">
@@ -55,11 +55,18 @@
         </div>
         <label>
           Email
-          <input id="email" type="email" placeholder="name@xedge.trade" />
+            <input id="email" type="email" placeholder="name@xau.trade" />
+        </label>
+        <label>
+          Company
+          <select id="company">
+            <option value="xau">XAU Technologies LLC — xau.trade</option>
+            <option value="xedge">XEDGE — xedge.trade</option>
+          </select>
         </label>
         <label>
           Website
-          <input id="website" type="text" value="xedge.trade" />
+          <input id="website" type="text" value="xau.trade" />
         </label>
         <label>
           Address <span class="opt">optional</span>
@@ -81,7 +88,6 @@
             <span>LinkedIn</span>
           </a>
         </div>
-        <p class="company-lock">Company: <strong>XAU Technologies LLC</strong></p>
       </form>
     </section>
 
@@ -149,6 +155,6 @@
     <span>xedge.trade · Gmail, Outlook &amp; Apple Mail</span>
   </footer>
 
-  <script src="app.js?v=underline3"></script>
+  <script src="app.js?v=company1"></script>
 </body>
 </html>
