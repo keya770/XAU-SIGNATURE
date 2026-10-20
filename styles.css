@@ -51,6 +51,10 @@ body {
   background: transparent;
 }
 
+.brand img.is-wide {
+  width: 168px;
+}
+
 .brand h1 {
   margin: 0;
   font-size: 22px;
@@ -367,6 +371,38 @@ select:focus {
 
 .email-mock.is-dark .email-mock-body p {
   color: #c4c4c4;
+}
+
+.email-mock.is-dark .sig-ink {
+  color: #ffffff !important;
+}
+
+.email-mock.is-dark .sig-muted {
+  color: #b0b0b0 !important;
+}
+
+.email-mock.is-dark .sig-link,
+.email-mock.is-dark .sig-link a {
+  color: #e8e8e8 !important;
+}
+
+.email-mock.is-dark .sig-red,
+.email-mock.is-dark .sig-red a {
+  color: #ff3b30 !important;
+}
+
+.email-mock.is-dark .sig-line {
+  border-color: #ff3b30 !important;
+}
+
+.email-mock.is-dark .sig-ul-light,
+.email-mock.is-dark .sig-logo-light {
+  display: none !important;
+}
+
+.email-mock.is-dark .sig-ul-dark,
+.email-mock.is-dark .sig-logo-dark {
+  display: block !important;
 }
 
 .sig-output {

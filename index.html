@@ -8,12 +8,12 @@
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="styles.css?v=company1" />
+  <link rel="stylesheet" href="styles.css?v=outlook-auto1" />
 </head>
 <body>
   <header class="topbar">
     <div class="brand">
-      <img src="assets/logo-sm.png?v=clear2" alt="XAU Technologies LLC" />
+      <img id="brand-logo" src="assets/logo-sm.png?v=clear2" alt="XAU Technologies LLC" />
       <div>
         <h1>XAU Technologies LLC</h1>
         <p>Professional email signature generator</p>
@@ -74,16 +74,16 @@
         </label>
 
         <div class="section-label">Company socials</div>
-        <div class="social-locks">
-          <a class="social-lock" href="https://x.com/xaumarkets" target="_blank" rel="noopener">
+        <div class="social-locks" id="social-locks">
+          <a class="social-lock" data-social="x" href="https://x.com/xaumarkets" target="_blank" rel="noopener">
             <img src="assets/icons/x.png?v=clear2" alt="" />
             <span>X / @xaumarkets</span>
           </a>
-          <a class="social-lock" href="https://www.instagram.com/xauicapitalmarkets" target="_blank" rel="noopener">
+          <a class="social-lock" data-social="instagram" href="https://www.instagram.com/xauicapitalmarkets" target="_blank" rel="noopener">
             <img src="assets/icons/instagram.png?v=clear2" alt="" />
             <span>Instagram</span>
           </a>
-          <a class="social-lock" href="https://www.linkedin.com/in/xau-markets-9573a4410/" target="_blank" rel="noopener">
+          <a class="social-lock" data-social="linkedin" href="https://www.linkedin.com/in/xau-markets-9573a4410/" target="_blank" rel="noopener">
             <img src="assets/icons/linkedin.png?v=clear2" alt="" />
             <span>LinkedIn</span>
           </a>
@@ -95,8 +95,8 @@
       <h2>Signature preview</h2>
 
       <div class="theme-switch" role="group" aria-label="Signature theme">
-        <button type="button" class="theme-btn" data-theme="light">Light</button>
-        <button type="button" class="theme-btn active" data-theme="dark">Dark</button>
+        <button type="button" class="theme-btn active" data-theme="light">Light preview</button>
+        <button type="button" class="theme-btn" data-theme="dark">Dark preview</button>
       </div>
 
       <div class="styles" role="tablist" aria-label="Signature styles">
@@ -117,7 +117,7 @@
         </button>
       </div>
 
-      <div class="email-mock is-dark">
+      <div class="email-mock">
         <div class="email-mock-top">
           <span class="win-dot"></span>
           <span class="win-dot"></span>
@@ -155,6 +155,6 @@
     <span>xedge.trade · Gmail, Outlook &amp; Apple Mail</span>
   </footer>
 
-  <script src="app.js?v=company1"></script>
+  <script src="app.js?v=outlook-auto1"></script>
 </body>
 </html>
