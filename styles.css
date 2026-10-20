@@ -373,38 +373,6 @@ select:focus {
   color: #c4c4c4;
 }
 
-.email-mock.is-dark .sig-ink {
-  color: #ffffff !important;
-}
-
-.email-mock.is-dark .sig-muted {
-  color: #b0b0b0 !important;
-}
-
-.email-mock.is-dark .sig-link,
-.email-mock.is-dark .sig-link a {
-  color: #e8e8e8 !important;
-}
-
-.email-mock.is-dark .sig-red,
-.email-mock.is-dark .sig-red a {
-  color: #ff3b30 !important;
-}
-
-.email-mock.is-dark .sig-line {
-  border-color: #ff3b30 !important;
-}
-
-.email-mock.is-dark .sig-ul-light,
-.email-mock.is-dark .sig-logo-light {
-  display: none !important;
-}
-
-.email-mock.is-dark .sig-ul-dark,
-.email-mock.is-dark .sig-logo-dark {
-  display: block !important;
-}
-
 .sig-output {
   margin-top: 14px;
   padding-top: 12px;

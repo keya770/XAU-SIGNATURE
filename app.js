@@ -83,8 +83,7 @@
   const src = { ...FILES };
 
   const field = (id) => document.getElementById(id).value.trim();
-  const colors = () => THEMES.light;
-  const darkColors = () => THEMES.dark;
+  const colors = () => THEMES[currentTheme];
 
   const esc = (value) =>
     String(value)
@@ -119,7 +118,7 @@
   };
 
   const a = (href, text, color) =>
-    `<a class="sig-link" href="${esc(href)}" style="color:${color};text-decoration:none;" target="_blank">${esc(text)}</a>`;
+    `<a href="${esc(href)}" style="color:${color};text-decoration:none;" target="_blank">${esc(text)}</a>`;
 
   const img = (key, width, alt, extra = "") =>
     `<img src="${esc(src[key])}" width="${width}" height="${width}" alt="${esc(alt)}" style="display:block;border:0;outline:none;text-decoration:none;background:transparent;${extra}" />`;
@@ -127,22 +126,15 @@
   const logoImg = (width, companyName) => {
     const company = selectedCompany();
     const logoWidth = company.logoWide ? Math.round(width * 2.15) : width;
-    const base =
-      "display:block;border:0;outline:none;text-decoration:none;height:auto;background:transparent;";
-    const light = `<img class="sig-logo-light" src="${esc(src[company.logoKey] || src.logo)}" width="${logoWidth}" alt="${esc(companyName)}" style="${base}max-width:${logoWidth}px;" />`;
-    if (!company.logoKeyDark) return light;
-    return `${light}<img class="sig-logo-dark" src="${esc(src[company.logoKeyDark])}" width="${logoWidth}" alt="" style="${base}max-width:${logoWidth}px;display:none;" />`;
+    const logoKey =
+      currentTheme === "dark" && company.logoKeyDark ? company.logoKeyDark : company.logoKey;
+    return `<img src="${esc(src[logoKey] || src.logo)}" width="${logoWidth}" alt="${esc(companyName)}" style="display:block;border:0;outline:none;text-decoration:none;height:auto;max-width:${logoWidth}px;background:transparent;" />`;
   };
 
   function nameUnderline(width = 86) {
+    const key = currentTheme === "dark" ? "underlineDark" : "underline";
     const height = 8;
-    const base =
-      "border:0;outline:none;text-decoration:none;width:" +
-      width +
-      "px;height:" +
-      height +
-      "px;background:transparent;";
-    return `<img class="sig-ul-light" src="${esc(src.underline)}" width="${width}" height="${height}" alt="" style="display:block;${base}" /><img class="sig-ul-dark" src="${esc(src.underlineDark)}" width="${width}" height="${height}" alt="" style="display:none;${base}" />`;
+    return `<img src="${esc(src[key])}" width="${width}" height="${height}" alt="" style="display:block;border:0;outline:none;text-decoration:none;width:${width}px;height:${height}px;background:transparent;" />`;
   }
 
   function logoBlock(width, companyName) {
@@ -152,30 +144,11 @@
   const roleLine = (d) => [d.title, d.department].filter(Boolean).join(" · ");
 
   function wrap(inner) {
-    const d = darkColors();
-    const style = `<style>
-.sig-root{color-scheme:light dark;background:transparent!important;}
-.sig-ul-dark,.sig-logo-dark{display:none!important;}
-@media (prefers-color-scheme: dark){
-.sig-ink{color:${d.ink}!important;}
-.sig-muted{color:${d.muted}!important;}
-.sig-link,.sig-link a{color:${d.link}!important;}
-.sig-red{color:${d.red}!important;}
-.sig-line{border-color:${d.red}!important;}
-.sig-ul-light,.sig-logo-light{display:none!important;}
-.sig-ul-dark,.sig-logo-dark{display:block!important;}
-}
-[data-ogsc] .sig-ink{color:${d.ink}!important;}
-[data-ogsc] .sig-muted{color:${d.muted}!important;}
-[data-ogsc] .sig-link,[data-ogsc] .sig-link a{color:${d.link}!important;}
-[data-ogsc] .sig-red{color:${d.red}!important;}
-[data-ogsc] .sig-line{border-color:${d.red}!important;}
-[data-ogsc] .sig-ul-light,[data-ogsc] .sig-logo-light{display:none!important;}
-[data-ogsc] .sig-ul-dark,[data-ogsc] .sig-logo-dark{display:block!important;}
-[data-ogsb] .sig-root,[data-ogsb] .sig-root td{background:transparent!important;}
-</style>`;
-    return `${style}<table class="sig-root" cellpadding="0" cellspacing="0" border="0" style="border-collapse:collapse;font-family:${FONT};color-scheme:light dark;background:transparent;">
-      <tr><td style="font-family:${FONT};background:transparent;">${inner}</td></tr>
+    const c = colors();
+    const pad = currentTheme === "dark" ? `padding:${c.pad};background-color:${c.bg};` : "background:transparent;";
+    const bgAttr = currentTheme === "dark" ? `bgcolor="${c.bg}"` : "";
+    return `<table cellpadding="0" cellspacing="0" border="0" style="border-collapse:collapse;font-family:${FONT};">
+      <tr><td ${bgAttr} style="font-family:${FONT};${pad}">${inner}</td></tr>
     </table>`;
   }
 
@@ -194,13 +167,11 @@
   function contactIconRow(iconKey, href, text) {
     if (!text) return "";
     const c = colors();
-    const label = href
-      ? a(href, text, c.link)
-      : `<span class="sig-muted" style="color:${c.muted};">${esc(text)}</span>`;
+    const label = href ? a(href, text, c.link) : `<span style="color:${c.muted};">${esc(text)}</span>`;
     return `<table cellpadding="0" cellspacing="0" border="0" style="border-collapse:collapse;font-family:${FONT};">
       <tr>
         <td style="padding:0 8px 5px 0;vertical-align:middle;width:16px;">${img(iconKey, 14, "")}</td>
-        <td class="sig-link" style="padding:0 0 5px 0;vertical-align:middle;font-size:12px;line-height:16px;color:${c.link};font-family:${FONT};">${label}</td>
+        <td style="padding:0 0 5px 0;vertical-align:middle;font-size:12px;line-height:16px;color:${c.link};font-family:${FONT};">${label}</td>
       </tr>
     </table>`;
   }
@@ -213,7 +184,7 @@
       contactIconRow("email", d.email ? `mailto:${d.email}` : "", d.email),
       contactIconRow("web", webHref(d.website), webLabel(d.website)),
       d.address
-        ? `<div class="sig-muted" style="font-size:12px;line-height:16px;color:${c.muted};padding:1px 0 0 22px;">${esc(d.address)}</div>`
+        ? `<div style="font-size:12px;line-height:16px;color:${c.muted};padding:1px 0 0 22px;">${esc(d.address)}</div>`
         : "",
     ].join("");
   }
@@ -225,11 +196,11 @@
       <table cellpadding="0" cellspacing="0" border="0" style="border-collapse:collapse;font-family:${FONT};">
         <tr>
           <td style="vertical-align:middle;padding:0 18px 0 0;">${logoBlock(84, d.company)}</td>
-          <td class="sig-line" style="border-left:2px solid ${c.red};padding:2px 0 2px 18px;vertical-align:middle;">
-            <div class="sig-ink" style="font-size:18px;line-height:22px;font-weight:bold;color:${c.ink};font-family:${FONT};">${esc(d.name)}</div>
+          <td style="border-left:2px solid ${c.red};padding:2px 0 2px 18px;vertical-align:middle;">
+            <div style="font-size:18px;line-height:22px;font-weight:bold;color:${c.ink};font-family:${FONT};">${esc(d.name)}</div>
             <div style="padding:6px 0 4px;line-height:0;font-size:0;">${nameUnderline(86)}</div>
-            ${role ? `<div class="sig-red" style="font-size:13px;line-height:18px;color:${c.red};padding-top:2px;font-family:${FONT};">${esc(role)}</div>` : ""}
-            <div class="sig-muted" style="font-size:12px;line-height:18px;color:${c.muted};padding:2px 0 10px;font-family:${FONT};">${esc(d.company)}</div>
+            ${role ? `<div style="font-size:13px;line-height:18px;color:${c.red};padding-top:2px;font-family:${FONT};">${esc(role)}</div>` : ""}
+            <div style="font-size:12px;line-height:18px;color:${c.muted};padding:2px 0 10px;font-family:${FONT};">${esc(d.company)}</div>
             ${contactsBlock(d)}
             <div style="padding-top:8px;">${socialRow(22)}</div>
           </td>
@@ -246,16 +217,16 @@
         <tr>
           <td style="vertical-align:middle;padding:0 16px 0 0;">${logoBlock(76, d.company)}</td>
           <td style="vertical-align:middle;">
-            <div class="sig-ink" style="font-size:20px;line-height:24px;font-weight:bold;color:${c.ink};font-family:${FONT};">${esc(d.name)}</div>
+            <div style="font-size:20px;line-height:24px;font-weight:bold;color:${c.ink};font-family:${FONT};">${esc(d.name)}</div>
             <div style="padding:7px 0 4px;line-height:0;font-size:0;">${nameUnderline(92)}</div>
-            ${role ? `<div class="sig-red" style="font-size:13px;line-height:18px;color:${c.red};padding-top:2px;font-family:${FONT};">${esc(role)}</div>` : ""}
-            <div class="sig-muted" style="font-size:12px;line-height:18px;color:${c.muted};padding-top:2px;font-family:${FONT};">${esc(d.company)}</div>
+            ${role ? `<div style="font-size:13px;line-height:18px;color:${c.red};padding-top:2px;font-family:${FONT};">${esc(role)}</div>` : ""}
+            <div style="font-size:12px;line-height:18px;color:${c.muted};padding-top:2px;font-family:${FONT};">${esc(d.company)}</div>
           </td>
         </tr>
         <tr>
           <td colspan="2" style="padding-top:14px;">
             <table cellpadding="0" cellspacing="0" border="0" width="100%" style="border-collapse:collapse;">
-              <tr><td class="sig-line" style="border-top:2px solid ${c.red};font-size:0;line-height:0;height:2px;">&nbsp;</td></tr>
+              <tr><td style="border-top:2px solid ${c.red};font-size:0;line-height:0;height:2px;">&nbsp;</td></tr>
             </table>
           </td>
         </tr>
@@ -280,12 +251,12 @@
       <table cellpadding="0" cellspacing="0" border="0" style="border-collapse:collapse;font-family:${FONT};">
         <tr>
           <td style="vertical-align:top;padding-right:20px;">
-            <div class="sig-ink" style="font-size:17px;line-height:22px;font-weight:bold;color:${c.ink};font-family:${FONT};">
-              ${esc(d.name)}${role ? ` <span class="sig-muted" style="color:${c.muted};font-weight:normal;">|</span> <span class="sig-muted" style="font-weight:normal;color:${c.muted};font-size:13px;">${esc(role)}</span>` : ""}
+            <div style="font-size:17px;line-height:22px;font-weight:bold;color:${c.ink};font-family:${FONT};">
+              ${esc(d.name)}${role ? ` <span style="color:${c.muted};font-weight:normal;">|</span> <span style="font-weight:normal;color:${c.muted};font-size:13px;">${esc(role)}</span>` : ""}
             </div>
             <div style="padding:8px 0 8px;line-height:0;font-size:0;">${nameUnderline(82)}</div>
-            <div class="sig-muted" style="font-size:12px;line-height:18px;color:${c.muted};font-family:${FONT};">${esc(d.company)}</div>
-            <div class="sig-red" style="font-size:12px;line-height:18px;padding:4px 0 10px;font-family:${FONT};">${a(webHref(d.website), webLabel(d.website), c.red)}</div>
+            <div style="font-size:12px;line-height:18px;color:${c.muted};font-family:${FONT};">${esc(d.company)}</div>
+            <div style="font-size:12px;line-height:18px;padding:4px 0 10px;font-family:${FONT};">${a(webHref(d.website), webLabel(d.website), c.red)}</div>
             ${d.phone || d.mobile || d.email || d.address ? contactsBlock({ ...d, website: "" }) : ""}
             <div style="padding-top:8px;">${socialRow(22)}</div>
           </td>
