@@ -20,7 +20,7 @@
       logoKeyDark: "logoXedgeDark",
       logoWide: true,
       socials: [
-        { key: "x", name: "X", href: "https://x.com/home", label: "X" },
+        { key: "x", name: "X", href: "https://x.com/XedgeTechno", label: "X / @XedgeTechno" },
         { key: "instagram", name: "Instagram", href: "https://www.instagram.com/xedgetechnologies/?hl=en", label: "Instagram / @xedgetechnologies" },
         { key: "linkedin", name: "LinkedIn", href: "https://www.linkedin.com/company/xedge-technology/", label: "LinkedIn" },
       ],
